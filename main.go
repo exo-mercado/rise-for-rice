@@ -14,7 +14,8 @@ func main() {
 
 	router := infrastructure.NewGinRouter() //router has been initialized and configured
 	setup.InitializeServices(router)        //passing router
-	router.Gin.Run(":8080")                 //server started on 8000 port
+	// router.Gin.Run(":8080")                 //server started on 8000 port
+	router.Gin.Run()                 //server started on 8000 port
 
 	// router.Gin.Use(cors.Default())
 }
