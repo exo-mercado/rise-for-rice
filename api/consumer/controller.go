@@ -22,12 +22,14 @@ func (c ConsumerController) Create(g *gin.Context) {
 
 	var consumer models.ConsumerPayload
 	if err := g.BindJSON(&consumer); err != nil {
+		g.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		utils.ErrorJSON(g, http.StatusBadRequest, err)
 		return
 	}
 
 	response, err := c.service.Create(consumer)
 	if err != nil {
+
 		utils.ErrorJSON(g, http.StatusInternalServerError, err)
 		return
 	}

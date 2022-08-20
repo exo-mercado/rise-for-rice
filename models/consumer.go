@@ -8,7 +8,7 @@ type Consumer struct {
 	gorm.Model
 	ConsumerFirstName		string	`form:"first_name" json:"first_name"`
 	ConsumerLastName		string	`form:"last_name" json:"last_name"`
-	ConsumerPhoneNumber		string	`form:"phone_numer" json:"phone_number"`
+	ConsumerPhoneNumber		string	`gorm:"unique" form:"phone_numer" json:"phone_number"`
 	ConsumerPassword		string	`form:"password" json:"password"`
 	Vehicles				[]Vehicle
 }
@@ -19,10 +19,10 @@ func (consumer *Consumer) TableName() string {
 
 //Payload
 type ConsumerPayload struct {
-	ConsumerFirstName		string	`gorm:"required" form:"first_name" json:"first_name"`
-	ConsumerLastName		string	`gorm:"required" form:"last_name" json:"last_name"`
-	ConsumerPhoneNumber		string	`gorm:"required" form:"phone_number" json:"phone_number"`
-	ConsumerPassword		string	`gorm:"required" form:"password" json:"password"`
+	ConsumerFirstName		string	`form:"first_name" json:"first_name" binding:"required"`
+	ConsumerLastName		string	`form:"last_name" json:"last_name" binding:"required"`
+	ConsumerPhoneNumber		string	`form:"phone_number" json:"phone_number" binding:"required"`
+	ConsumerPassword		string	`form:"password" json:"password" binding:"required"`
 }
 
 
