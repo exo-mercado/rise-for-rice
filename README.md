@@ -26,5 +26,5 @@ API for parking application
 | :-------- | :------- | :------------------------- |
 | `first_name` | `string` | **Required**. |
 | `last_name` | `string` | **Required**. |
-| `phone_number` | `string` | **Required**. |
+| `phone_number` | `string` | **Required** **Unique**. |
 | `password` | `string` | **Required**. |
