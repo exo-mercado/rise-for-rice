@@ -28,7 +28,7 @@ func (r ClientRepository) FindAll(client models.Client, keyword string) (*[]mode
 	if keyword != "" {
 		queryKeyword := "%" + keyword + "%"
 		queryBuilder = queryBuilder.Where(
-			r.db.DB.Where("classroom.Title LIKE ? ", queryKeyword))
+			r.db.DB.Where("client.client_name LIKE ? ", queryKeyword))
 	}
 
 	err := queryBuilder.

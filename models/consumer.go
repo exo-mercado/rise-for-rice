@@ -17,6 +17,14 @@ func (consumer *Consumer) TableName() string {
 	return "consumer"
 }
 
+//Payload
+type ConsumerPayload struct {
+	ConsumerFirstName		string	`gorm:"required" form:"first_name" json:"first_name"`
+	ConsumerLastName		string	`gorm:"required" form:"last_name" json:"last_name"`
+	ConsumerPhoneNumber		string	`gorm:"required" form:"phone_number" json:"phone_number"`
+	ConsumerPassword		string	`gorm:"required" form:"password" json:"password"`
+}
+
 
 //RESPONSES
 func (consumer *Consumer) BasicResponse() map[string]interface{} {

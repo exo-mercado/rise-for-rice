@@ -6,7 +6,7 @@ import (
 
 type Client struct {
 	gorm.Model
-	ClientName                   	uint    `form:"name" json:"name"`
+	ClientName                   	string    `form:"name" json:"name"`
 	ClientLatitude               	float64 `form:"latitude" json:"latitude"`
 	ClientLongitude              	float64 `form:"longitude" json:"longitude"`
 	ClientReservationFee         	float64 `form:"reservation_fee" json:"reservation_fee"`
