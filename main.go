@@ -1,17 +1,20 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	// "github.com/gin-contrib/cors"
+	"github.com/exo-mercado/rise-for-rice/infrastructure"
+	"github.com/exo-mercado/rise-for-rice/setup"
 )
 
+func init() {
+	infrastructure.LoadEnv()
+}
+
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	router := infrastructure.NewGinRouter() //router has been initialized and configured
+	setup.InitializeServices(router)        //passing router
+	router.Gin.Run(":8080")                 //server started on 8000 port
+
+	// router.Gin.Use(cors.Default())
 }
