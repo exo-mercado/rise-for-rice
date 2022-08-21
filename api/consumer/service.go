@@ -21,3 +21,7 @@ func (s ConsumerService) Login(consumer models.LoginPayload) (models.Consumer, e
 	
 	return s.repo.Login(consumer)
 }
+
+func (s ConsumerService) FindByID(id int, join string) (models.Consumer, error) {
+	return s.repo.FindByID(id, join)
+}

@@ -18,5 +18,6 @@ func (r VehicleRoute) Setup() {
 	vehicle := r.Handler.Gin.Group("/vehicle")
 	{
 		vehicle.POST("", r.Controller.Create)
+		vehicle.GET("/consumer/:id", r.Controller.FindByConsumerID)
 	}
 }

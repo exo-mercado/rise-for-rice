@@ -36,3 +36,14 @@ func (r VehicleRepository) Create(vehicle models.VehiclePayload) (models.Vehicle
 
 	return vehicleModel, nil
 }
+
+func (r VehicleRepository) FindByConsumerID(consumerID int) ([]models.Vehicle, error) {
+	var vehicles []models.Vehicle
+
+	err := r.db.DB.Model(&models.Vehicle{}).Where("consumer_id = ?", consumerID).Find(&vehicles).Error
+	if err != nil {
+		return vehicles, err
+	}
+
+	return vehicles, nil
+}

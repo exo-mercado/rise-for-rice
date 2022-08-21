@@ -15,3 +15,7 @@ func NewVehicleService(repo VehicleRepository) VehicleService {
 func (s VehicleService) Create(vehicle models.VehiclePayload) (models.Vehicle, error) {
 	return s.repo.Create(vehicle)
 }
+
+func (s VehicleService) FindByConsumerID(consumerID int) ([]models.Vehicle, error) {
+	return s.repo.FindByConsumerID(consumerID)
+}

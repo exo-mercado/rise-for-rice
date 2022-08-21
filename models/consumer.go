@@ -47,12 +47,17 @@ func (consumer *Consumer) BasicResponse() map[string]interface{} {
 
 func (consumer *Consumer) VehicleRelationalResponse() map[string]interface{} {
 	resp := make(map[string]interface{})
+	var vehicles []map[string]interface{}
+
+	for _, vehicle := range consumer.Vehicles {
+		vehicles = append(vehicles, vehicle.BasicResponse())
+	}
 
 	resp["id"] 					= consumer.ID
 	resp["first_name"] 			= consumer.ConsumerFirstName
 	resp["last_name"] 			= consumer.ConsumerLastName
 	resp["phone_number"] 		= consumer.ConsumerPhoneNumber
-	resp["vehicles"]			= consumer.Vehicles
+	resp["vehicles"]			= vehicles
 	resp["created_at"]			= consumer.CreatedAt
 	resp["updated_at"]			= consumer.UpdatedAt
 

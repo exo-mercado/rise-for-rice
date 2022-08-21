@@ -6,7 +6,6 @@ import (
 	"github.com/exo-mercado/rise-for-rice/api/reservation"
 	"github.com/exo-mercado/rise-for-rice/api/vehicle"
 	"github.com/exo-mercado/rise-for-rice/infrastructure"
-	"github.com/exo-mercado/rise-for-rice/models"
 )
 
 func InitializeServices(router infrastructure.GinRouter) {
@@ -44,12 +43,12 @@ func InitializeServices(router infrastructure.GinRouter) {
 
 
 	// migrating User model to datbase table
-	db.DB.AutoMigrate(
-		&models.Area{},
-		&models.Client{},
-		&models.ClientUser{},
-		&models.Consumer{},
-		&models.Reservation{},
-		&models.Vehicle{},
-	);
+	// db.DB.AutoMigrate(
+	// 	&models.Area{},
+	// 	&models.Client{},
+	// 	&models.ClientUser{},
+	// 	&models.Consumer{},
+	// 	&models.Reservation{},
+	// 	&models.Vehicle{},
+	// );
 }

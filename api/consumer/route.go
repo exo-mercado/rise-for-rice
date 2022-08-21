@@ -17,6 +17,7 @@ func NewConsumerRoute(handler infrastructure.GinRouter, controller ConsumerContr
 func (r ConsumerRoute) Setup() {
 	consumer := r.Handler.Gin.Group("/consumer")
 	{
+		consumer.GET("/:id", r.Controller.FindByID)
 		consumer.POST("", r.Controller.Create)
 		consumer.POST("/login", r.Controller.Login)
 	}

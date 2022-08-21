@@ -80,3 +80,22 @@ func (r ConsumerRepository) Login(consumer models.LoginPayload) (models.Consumer
 
 	return consumerModel, nil
 }
+
+func (r ConsumerRepository) FindByID(id int, keyword string) (models.Consumer, error) {
+	var consumerModel models.Consumer
+
+	switch keyword {
+		case "vehicle":
+			err := r.db.DB.Preload("Vehicles").Model(&models.Consumer{}).Where("id = ?", id).Find(&consumerModel).Error
+			if err != nil {
+				return consumerModel, err
+			}
+		default:
+			err := r.db.DB.Model(&models.Consumer{}).Where("id = ?", id).Find(&consumerModel).Error
+			if err != nil {
+				return consumerModel, err
+			}
+	}
+		
+	return consumerModel, nil
+}

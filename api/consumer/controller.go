@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/exo-mercado/rise-for-rice/models"
 	"github.com/exo-mercado/rise-for-rice/utils"
@@ -70,4 +71,30 @@ func (c ConsumerController) Login(g *gin.Context) {
 
 	g.JSON(http.StatusOK, gin.H{"token": signed})
 
+}
+
+
+func (c ConsumerController) FindByID(g *gin.Context) {
+
+	join := g.Query("join")
+
+	id, err := strconv.Atoi(g.Param("id"))
+	if err != nil {
+		utils.ErrorJSON(g, http.StatusInternalServerError, err)
+		return
+	}
+
+	response, err := c.service.FindByID(id, join)
+	if err != nil {
+		fmt.Println(err)
+		g.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Cannot fetch to server"})
+		return
+	}
+
+	if response.ID == 0 {
+		g.AbortWithStatusJSON(http.StatusNotFound, gin.H{"message": "Cannot find the consumer"})
+		return
+	}
+
+	g.JSON(http.StatusOK, response.VehicleRelationalResponse() )
 }

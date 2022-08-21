@@ -8,9 +8,9 @@
   GET /client
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `keyword` | `string` | **Optional**. Keyword to search |
+| Query Parameter | Description                |
+| :-------- |  :------------------------- |
+| `keyword` | **Optional**. Keyword to search |
 
 
 ### Consumer API
@@ -27,8 +27,36 @@
 | `phone_number` | `string` | **Required**. |
 | `password` | `string` | **Required**. |
 
+#### Get consumer by ID
+
+```http
+  GET /consumer/{:id}
+```
+
+| Query Parameter | Description                |
+| :-------- | :------------------------- |
+| `join`| **optional**.enum(*vehicle*) |
+
+
+#### Register consumer end point
+
+```http
+  POST /consumer/login
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `phone_number` | `string` | **Required**. |
+| `password` | `string` | **Required**. |
+
 
 ### Vehicle API
+
+#### Create Vehicle end point
+```http
+  GET /vehicle/consumer/{:id}
+```
+
 #### Create Vehicle end point
 ###### when you create a new vehicle, this will be set as default vehicle for the consumer
 
