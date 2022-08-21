@@ -6,10 +6,10 @@ import (
 
 type Consumer struct {
 	gorm.Model
-	ConsumerFirstName		string	`form:"first_name" json:"first_name"`
-	ConsumerLastName		string	`form:"last_name" json:"last_name"`
-	ConsumerPhoneNumber		string	`gorm:"unique" form:"phone_numer" json:"phone_number"`
-	ConsumerPassword		string	`form:"password" json:"password"`
+	ConsumerFirstName		string	`json:"first_name"`
+	ConsumerLastName		string	`json:"last_name"`
+	ConsumerPhoneNumber		string	`gorm:"unique" json:"phone_number"`
+	ConsumerPassword		string	`json:"password"`
 	Vehicles				[]Vehicle
 }
 
@@ -19,12 +19,17 @@ func (consumer *Consumer) TableName() string {
 
 //Payload
 type ConsumerPayload struct {
-	ConsumerFirstName		string	`form:"first_name" json:"first_name" binding:"required"`
-	ConsumerLastName		string	`form:"last_name" json:"last_name" binding:"required"`
-	ConsumerPhoneNumber		string	`form:"phone_number" json:"phone_number" binding:"required"`
-	ConsumerPassword		string	`form:"password" json:"password" binding:"required"`
+	ConsumerFirstName		string	`json:"first_name" binding:"required"`
+	ConsumerLastName		string	`json:"last_name" binding:"required"`
+	ConsumerPhoneNumber		string	`json:"phone_number" binding:"required"`
+	ConsumerPassword		string	`json:"password" binding:"required"`
 }
 
+
+type LoginPayload struct {
+	ConsumerPhoneNumber		string	`json:"phone_number" binding:"required"`
+	ConsumerPassword		string	`json:"password" binding:"required"`
+}
 
 //RESPONSES
 func (consumer *Consumer) BasicResponse() map[string]interface{} {

@@ -10,6 +10,7 @@ type Vehicle struct {
 	VehicleModel	string	`form:"model" json:"model"`
 	VehicleYear		string	`form:"year" json:"year"`
 	VehicleColor	string	`form:"color" json:"color"`
+	VehiclePlate	string	`form:"plate" json:"plate"`
 	IsDefault		bool	`form:"is_default" json:"is_default"`
 	ConsumerID		uint	`form:"consumer_id" json:"consumer_id"`
 	Consumer		Consumer
@@ -17,6 +18,16 @@ type Vehicle struct {
 
 func (vehicle *Vehicle) TableName() string {
 	return "vehicle"
+}
+
+//Payload
+type VehiclePayload struct {
+	VehicleMake		string	`form:"make" json:"make" binding:"required"`
+	VehicleModel	string	`form:"model" json:"model" binding:"required"`
+	VehicleYear		string	`form:"year" json:"year" binding:"required"`
+	VehicleColor	string	`form:"color" json:"color" binding:"required"`
+	VehiclePlate	string	`form:"plate" json:"plate" binding:"required"`
+	ConsumerID		uint	`form:"consumer_id" json:"consumer_id" binding:"required"`
 }
 
 

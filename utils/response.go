@@ -2,17 +2,19 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/go-sql-driver/mysql"
 )
 
 type ErrorMsg struct {
-    Field string `json:"field"`
-    Message   string `json:"message"`
+    Key         string `json:"field"`
+    Error     string `json:"message"`
 }
+
 
 func getErrorMsg(fe validator.FieldError) string {
 
@@ -31,21 +33,33 @@ func getErrorMsg(fe validator.FieldError) string {
 }
 
 func ErrorJSON(c *gin.Context, statusCode int, err error) {
-
+    fmt.Println("Im running")
+    fmt.Println(err)
     var ve validator.ValidationErrors
-        if errors.As(err, &ve) {
-            out := make([]ErrorMsg, len(ve))
-            for i, fe := range ve {
-                out[i] = ErrorMsg{fe.Field(), getErrorMsg(fe)}
-            }
-            c.JSON(statusCode, gin.H{"errors": out})
-        }
+    var sqlErr mysql.MySQLError
 
-        mysqlErr := err.(*mysql.MySQLError)
-        switch mysqlErr.Number {
-            case 1062:
-                c.JSON(http.StatusBadRequest, gin.H{"errors": "Duplicate entry"})
-            default:
-                c.JSON(statusCode, gin.H{"errors": err.Error()})
+    if errors.As(err, &ve) {
+        fmt.Println("---")
+        fmt.Println(ve)
+        out := make([]ErrorMsg, len(ve))
+        for i, fe := range ve {
+            out[i] = ErrorMsg{fe.Field(), getErrorMsg(fe)}
         }
+        c.AbortWithStatusJSON(statusCode, gin.H{"errors": out})
+    }
+
+    if( errors.Is(err, &sqlErr)) {
+            switch sqlErr.Number {
+                case 1062:
+                    c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"errors": "Duplicate entry"})
+                default:
+                    c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"errors": "Internal server error"})
+            }
+    }
+
+    // fmt.Println("------")
+    // fmt.Println(mysqlErr)
+    // fmt.Println("------")
+    // fmt.Println("------")
+
 }

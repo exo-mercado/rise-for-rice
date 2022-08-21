@@ -64,3 +64,19 @@ func (r ConsumerRepository) Create(consumer models.ConsumerPayload) (models.Cons
 
 		
 }
+
+func (r ConsumerRepository) Login(consumer models.LoginPayload) (models.Consumer, error) {
+	var consumerModel models.Consumer
+
+	err := r.db.DB.Where("consumer_phone_number = ?", consumer.ConsumerPhoneNumber).Find(&consumerModel).Error
+	if err != nil {
+		return consumerModel, err
+	}
+
+	err = utils.CheckPasswordHash(consumer.ConsumerPassword, consumerModel.ConsumerPassword)
+	if err != nil {
+		return consumerModel, err
+	}
+
+	return consumerModel, nil
+}

@@ -15,3 +15,9 @@ func NewConsumerService(repo ConsumerRepository) ConsumerService {
 func (s ConsumerService) Create(consumer models.ConsumerPayload) (models.Consumer, error) {
 	return s.repo.Create(consumer)
 }
+
+func (s ConsumerService) Login(consumer models.LoginPayload) (models.Consumer, error) {
+
+	
+	return s.repo.Login(consumer)
+}

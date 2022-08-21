@@ -18,5 +18,6 @@ func (r ConsumerRoute) Setup() {
 	consumer := r.Handler.Gin.Group("/consumer")
 	{
 		consumer.POST("", r.Controller.Create)
+		consumer.POST("/login", r.Controller.Login)
 	}
 }

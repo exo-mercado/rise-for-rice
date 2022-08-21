@@ -3,6 +3,8 @@ package setup
 import (
 	"github.com/exo-mercado/rise-for-rice/api/client"
 	"github.com/exo-mercado/rise-for-rice/api/consumer"
+	"github.com/exo-mercado/rise-for-rice/api/reservation"
+	"github.com/exo-mercado/rise-for-rice/api/vehicle"
 	"github.com/exo-mercado/rise-for-rice/infrastructure"
 	"github.com/exo-mercado/rise-for-rice/models"
 )
@@ -23,6 +25,21 @@ func InitializeServices(router infrastructure.GinRouter) {
 	consumerController := consumer.NewConsumerController(consumerService)
 	consumerRoute := consumer.NewConsumerRoute(router, consumerController)
 	consumerRoute.Setup()
+
+	// vehicle
+	vehicleRepository :=  vehicle.NewVehicleRepository(db)
+	vehicleService := vehicle.NewVehicleService(vehicleRepository)
+	vehicleController := vehicle.NewVehicleController(vehicleService)
+	vehicleRoute := vehicle.NewVehicleRoute(router, vehicleController)
+	vehicleRoute.Setup()
+
+	//reservation
+
+	reservationRepository := reservation.NewReservationRepository(db)
+	reservationService := reservation.NewReservationService(reservationRepository)
+	reservationController := reservation.NewReservationController(reservationService)
+	reservationRoute := reservation.NewReservationRoute(router, reservationController)
+	reservationRoute.Setup()
 
 
 
