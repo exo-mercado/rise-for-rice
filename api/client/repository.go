@@ -21,7 +21,7 @@ func (r ClientRepository) FindAll(client models.Client, keyword string) (*[]mode
 	var totalRows int64 = 0
 
 	queryBuilder := r.db.DB.
-		Preload("Areas").
+		Preload("Areas.Reservations").
 		Order("created_at desc").
 		Model(&models.Client{})
 

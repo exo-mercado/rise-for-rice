@@ -18,5 +18,6 @@ func (r ReservationRoute) Setup() {
 	reservation := r.Handler.Gin.Group("/reservation")
 	{
 		reservation.POST("", r.Controller.Create)
+		reservation.GET("", r.Controller.FindAll)
 	}
 }

@@ -48,6 +48,11 @@ func (client *Client) BasicResponse() map[string]interface{} {
 
 func (client *Client) AreasRelationalResponse() map[string]interface{} {
 	resp := make(map[string]interface{})
+	var areas []map[string]interface{}
+
+	for _, area := range client.Areas {
+		areas = append(areas, area.BasicResponse())
+	}
 
 	resp["id"] 					= client.ID
 	resp["name"] 				= client.ClientName
@@ -61,7 +66,7 @@ func (client *Client) AreasRelationalResponse() map[string]interface{} {
 	resp["province"]			= client.ClientProvince
 	resp["city"]				= client.ClientCity
 	resp["zip_code"]			= client.ClientZipCode
-	resp["areas"]				= client.Areas
+	resp["areas"]				= areas
 	resp["created_at"]			= client.CreatedAt
 	resp["updated_at"]			= client.UpdatedAt
 

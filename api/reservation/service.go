@@ -31,3 +31,7 @@ func (s ReservationService) UsingReserveSpace(id uint) (error) {
 func (s ReservationService) CancelReservation(id uint) (error) {
 	return s.repo.CancelReservation(id)
 }
+
+func (s ReservationService) FindAll(id string, status string) ([]models.Reservation, error) {
+	return s.repo.FindAll(id, status)
+}

@@ -34,3 +34,25 @@ func (c ReservationController) Create(g *gin.Context) {
 
 	g.JSON(http.StatusOK, response.BasicResponse())
 }
+
+func (c ReservationController) FindAll(g *gin.Context) {
+	id := g.Query("id")
+	status := g.Query("status")
+	response, err := c.service.FindAll(id, status)
+	if err != nil {
+		utils.ErrorJSON(g, http.StatusInternalServerError, err)
+		return
+	}
+
+	responseArray := make([]map[string]interface{}, 0)
+
+	for _, reservationResponse := range response {
+		resp := reservationResponse.BasicResponse()
+		responseArray = append(responseArray, resp)
+	}
+
+	g.JSON(http.StatusOK, gin.H{
+		"content": responseArray,
+		"totalElements":   len(responseArray),
+	})
+}

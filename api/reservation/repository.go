@@ -20,10 +20,11 @@ func (r ReservationRepository) Create(reservation models.ReservationPayload) (mo
 	var reservationModel models.Reservation
 
 	reservationModel.ReservationFrom 	= reservation.ReservationFrom
-	reservationModel.ReservationTo 	= reservation.ReservationTo
-	reservationModel.VehicleID 		= reservation.VehicleID
-	reservationModel.GridNumber		= reservation.GridNumber
-	reservationModel.Status			= "RESERVED"
+	reservationModel.ReservationTo 		= reservation.ReservationTo
+	reservationModel.VehicleID 			= reservation.VehicleID
+	reservationModel.GridNumber			= reservation.GridNumber
+	reservationModel.AreaID				= reservation.AreaID
+	reservationModel.Status				= "RESERVED"
 
 	err := r.db.DB.Create(&reservationModel).Error
 	if err != nil {
@@ -85,4 +86,25 @@ func (r ReservationRepository) CancelReservation(id uint) (error) {
 	}
 
 	return nil
+}
+
+func (r ReservationRepository) FindAll(id string, status string) ([]models.Reservation, error) {
+	var reservations []models.Reservation
+
+	queryBuilder := r.db.DB.
+		Preload("Vehicle.Consumer").
+		Order("created_at desc").
+		Model(&models.Reservation{})
+
+	if status != "" {
+		queryBuilder = queryBuilder.Where("status = ?", status)
+	}
+
+	if id != "" {
+		queryBuilder = queryBuilder.Where("vehicle_id IN (?)",r.db.DB.Table("vehicle").Select("ID").Where("consumer_id = ?", id))
+	}
+
+	err := queryBuilder.Find(&reservations).Error
+
+	return reservations, err
 }
