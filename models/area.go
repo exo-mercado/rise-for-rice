@@ -27,6 +27,11 @@ type AreaPayload struct {
 	ClientID		uint	`form:"client_id" json:"client_id" binding:"required"`
 }
 
+type AreaStatusPayload struct {
+	AreaID		uint	`form:"area_id" json:"area_id" binding:"required"`
+	Status		uint	`form:"status" json:"status" binding:"required"`
+}
+
 //RESPONSES
 func (area *Area) BasicResponse() map[string]interface{} {
 	resp := make(map[string]interface{})
@@ -49,4 +54,3 @@ func (area *Area) BasicResponse() map[string]interface{} {
 
 	return resp
 }
-

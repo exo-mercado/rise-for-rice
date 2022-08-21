@@ -32,6 +32,8 @@ func (c ConsumerController) Create(g *gin.Context) {
 		return
 	}
 
+	fmt.Println("consumer", consumer)
+
 	response, err := c.service.Create(consumer)
 	if err != nil {
 		utils.ErrorJSON(g, http.StatusInternalServerError, err)

@@ -11,6 +11,7 @@ type ClientUser struct {
 	ClientUserPhoneNumber	string	`form:"phone_number" json:"phone_number"`
 	ClientUserEmail			string	`form:"email" json:"email"`
 	ClientUserPosition		string	`form:"position" json:"position"`
+	ClientUserPassword		string	`form:"password" json:"password"`
 	ClientID				uint	`form:"client_id" json:"client_id"`
 	Client					Client
 }
@@ -19,6 +20,17 @@ func (clientUser *ClientUser) TableName() string {
 	return "client_user"
 }
 
+//PAYLOADS
+
+type ClientUserPayload struct {
+	ClientUserFirstName		string	`form:"first_name" json:"first_name"`
+	ClientUserLastName		string	`form:"last_name" json:"last_name"`
+	ClientUserPhoneNumber	string	`form:"phone_number" json:"phone_number"`
+	ClientUserEmail			string	`form:"email" json:"email"`
+	ClientUserPosition		string	`form:"position" json:"position"`
+	ClientUserPassword		string	`form:"password" json:"password"`
+	ClientID				uint	`form:"client_id" json:"client_id"`
+}
 
 //RESPONSES
 func (clientUser *ClientUser) BasicResponse() map[string]interface{} {

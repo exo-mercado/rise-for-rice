@@ -3,6 +3,7 @@ package client
 import (
 	"github.com/exo-mercado/rise-for-rice/infrastructure"
 	"github.com/exo-mercado/rise-for-rice/models"
+	"github.com/exo-mercado/rise-for-rice/utils"
 )
 
 type ClientRepository struct {
@@ -37,4 +38,25 @@ func (r ClientRepository) FindAll(client models.Client, keyword string) (*[]mode
 		Count(&totalRows).Error
 		
 	return &clients, totalRows, err
+}
+
+func (r ClientRepository) CreateClientUser(client models.ClientUserPayload) (models.ClientUser, error) {
+
+	var clientUser models.ClientUser
+
+	hashPassword, _ := utils.HashPassword(client.ClientUserPassword)
+
+	clientUser.ClientUserEmail			= client.ClientUserEmail
+	clientUser.ClientUserFirstName 		= client.ClientUserFirstName
+	clientUser.ClientUserLastName		= client.ClientUserLastName
+	clientUser.ClientUserPhoneNumber 	= client.ClientUserPhoneNumber
+	clientUser.ClientUserPosition 		= client.ClientUserPosition
+	clientUser.ClientUserPassword 		= hashPassword
+	
+	err := r.db.DB.Create(&clientUser).Error
+	if err != nil {
+		return clientUser, err
+	}
+
+	return clientUser, nil
 }
